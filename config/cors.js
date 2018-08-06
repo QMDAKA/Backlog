@@ -64,7 +64,7 @@ module.exports.cors = {
    *                                                                          *
    ***************************************************************************/
 
-  // methods: 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
+   methods: 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
 
   /***************************************************************************
    *                                                                          *
@@ -73,6 +73,6 @@ module.exports.cors = {
    *                                                                          *
    ***************************************************************************/
 
-  headers: 'Content-Type, Authorization'
+  headers: 'Content-Type, Authorization, Access-Control-Allow-Headers,Content-Type, Origin, Authorization, X-Requested-With'
 
 };

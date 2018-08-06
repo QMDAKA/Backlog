@@ -26,6 +26,7 @@ process.chdir(__dirname);
 
 // Attempt to import `sails`.
 var sails;
+
 try {
   sails = require('sails');
 } catch (e) {
@@ -54,7 +55,15 @@ try {
     rc = function () { return {}; };
   }
 }
-
-
+//
+// sails.use(function (req,res,next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Content-Type, Origin, Authorization, X-Requested-With'
+//   );
+//   next();
+// })
 // Start server
 sails.lift(rc('sails'));

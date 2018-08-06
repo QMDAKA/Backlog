@@ -19,6 +19,14 @@
 
 module.exports.policies = {
 
+  '*': ['isAuthorized'],
+  'AuthController': {
+    'welcome': true,
+    'login' : true,
+    'authenticate' : true,
+    'authcallback' : true,
+    'verify': ['isAuthorized']
+  }
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions (`true` allows public     *
