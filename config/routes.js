@@ -60,5 +60,19 @@ module.exports.routes = {
   * User Api
   * */
   'get /users/me' : 'UserController.me',
-
+  'get /users': 'UserController.index',
+  'get /users/:id' : 'UserController.show',
+  /*
+  * Post Api
+  * */
+  'post /posts' : 'PostsController.create',
+  'get /posts' : 'PostsController.index',
+  'get /posts/:id' : 'PostsController.show',
+  'put /posts/:id' : 'PostsController.update',
+  'get /users/:idUser/posts' : 'PostsController.index',
+  'get /users/:idUser/posts/:id' : 'PostsController.show',
+  /*
+   * Image Api
+   * */
+  'post /images' : 'ImagesController.upload'
 };
