@@ -1,5 +1,3 @@
-const multer = require('multer')
-const upload = multer({dest: 'uploads/'})
 const dest = '../../assets/images';
 module.exports = {
   create: async (req, res) => {
@@ -25,7 +23,7 @@ module.exports = {
         post.users.add(user);
         for (let i = 0; i < tags.length; i++) {
           let count = await Tag.find({name: tags[i]})
-          if(count == 0) {
+          if (count == 0) {
             let tag = await Tag.create({
               name: tags[i]
             })
@@ -52,26 +50,29 @@ module.exports = {
       });
     });
   },
-  index : async(req,res) => {
-    if(_.isUndefined(req.param('idUser'))){
+  index: async (req, res) => {
+    if (_.isUndefined(req.param('idUser'))) {
 
-  }}
+    }else {
+
+    }
+  }
   ,
-  show: async(req,res) => {
-    try{
-      let result = await Post.findOne({id: req.param('id')});
-      if(_.isUndefined(result)){
+  show: async (req, res) => {
+    try {
+      let result = await Post.findOne({id: req.param('id')}).populate('users').populate('tags');
+      if (_.isUndefined(result)) {
         return res.status(404).json({
           success: false,
           payload: "Not found"
         });
-      }else {
+      } else {
         return res.status(200).json({
           success: true,
           payload: result
         });
       }
-    }catch (err) {
+    } catch (err) {
       res.status(400).json({
         success: false,
         err: req.__('Bad Request')

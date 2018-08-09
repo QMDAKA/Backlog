@@ -70,6 +70,9 @@ module.exports.routes = {
   'get /posts/:id' : 'PostsController.show',
   'put /posts/:id' : 'PostsController.update',
   'get /users/:idUser/posts' : 'PostsController.index',
-  'get /users/:idUser/posts/:id' : 'PostsController.show'
-
+  'get /users/:idUser/posts/:id' : 'PostsController.show',
+  /*
+   * Image Api
+   * */
+  'post /images' : 'ImagesController.upload'
 };
