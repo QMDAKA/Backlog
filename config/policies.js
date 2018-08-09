@@ -23,9 +23,13 @@ module.exports.policies = {
   'AuthController': {
     'welcome': true,
     'login' : true,
+    'logout' :true,
     'authenticate' : true,
     'authcallback' : true,
     'verify': ['isAuthorized']
+  },
+  'ImagesController': {
+    'upload': true
   }
   /***************************************************************************
   *                                                                          *

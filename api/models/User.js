@@ -17,6 +17,14 @@ module.exports = {
     socialId: {
       type: 'string'
     },
+    posts: {
+      collection: 'post',
+      via: 'users',
+    },
+    favorite: {
+      collection: 'favorite',
+      via: 'userId'
+    },
     toJSON: function () {
       let obj = this.toObject();
       return obj;
