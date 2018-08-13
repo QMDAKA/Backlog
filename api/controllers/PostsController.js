@@ -18,16 +18,18 @@ module.exports = {
           body: req.query.body,
           image: avatarUrl
         };
-        let tags = req.query.tags
+        let tags = [...new Set(req.query.tags)];
         post = await Post.create(post);
         post.users.add(user);
         for (let i = 0; i < tags.length; i++) {
-          let count = await Tag.find({name: tags[i]})
-          if (count == 0) {
+          let tmp = await Tag.findOne({'name': tags[i]})
+          if (_.isUndefined(tmp)) {
             let tag = await Tag.create({
               name: tags[i]
             })
             post.tags.add(tag)
+          }else {
+            post.tags.add(tmp)
           }
         }
         let result = await post.save();
@@ -51,11 +53,18 @@ module.exports = {
     });
   },
   index: async (req, res) => {
-    if (_.isUndefined(req.param('idUser'))) {
-
+    let payload
+    if (_.isUndefined(req.query.idUser) && _.isUndefined(req.query.tag)) {
+      payload = await PostsService.allPost(req.query.page,req.query.size)
+    }else if(!_.isUndefined(req.query.idUser)){
+      payload = await PostsService.findPostByUser(req.query.idUser,req.query.page,req.query.size)
     }else {
-
+      payload = await PostsService.findPostByTag(req.query.tag,req.query.page,req.query.size)
     }
+    return res.status(200).json({
+      success: true,
+      payload: payload
+    });
   }
   ,
   show: async (req, res) => {
@@ -79,4 +88,7 @@ module.exports = {
       });
     }
   },
+  delete: async(req,res) => {
+
+  }
 }

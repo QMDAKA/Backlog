@@ -9,5 +9,10 @@ module.exports = {
   secret: '@iluminati@',
   session: {
     cookieKey: 'dakaplaza'
-  }
+  },
+  page: 1,
+  size: 10,
+  query: '',
+  sortQuery: 'createdAt ',
+  sizeOfTags: 10,
 };

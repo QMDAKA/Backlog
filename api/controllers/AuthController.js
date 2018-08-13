@@ -30,7 +30,7 @@ module.exports = {
   },
   logout: function (req,res) {
     req.logout();
-    res.send('logout');
+    res.redirect(keys.frontendHost+'/blog-home');
   },
   verify:  async (req,res) =>{
     return res.json(200, {id: req.token.userId});
