@@ -19,7 +19,7 @@
 
 module.exports.policies = {
 
-  '*': ['isAuthorized'],
+  '*': true,
   'AuthController': {
     'welcome': true,
     'login' : true,
@@ -28,8 +28,12 @@ module.exports.policies = {
     'authcallback' : true,
     'verify': ['isAuthorized']
   },
-  'ImagesController': {
-    'upload': true
+  'UserController' : {
+    'me': ['isAuthorized']
+  },
+  'PostsController': {
+    'create': ['isAuthorized'],
+    'delete': ['isAuthorized'],
   }
   /***************************************************************************
   *                                                                          *
