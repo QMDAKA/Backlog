@@ -72,6 +72,7 @@ module.exports.routes = {
   'delete /posts/:id' : 'PostsController.delete',
   'get /users/:idUser/posts' : 'PostsController.index',
   'get /users/:idUser/posts/:id' : 'PostsController.show',
+  'get /users/favorites' : 'PostsController.favorites',
   /*
    * Image Api
    * */
@@ -80,4 +81,13 @@ module.exports.routes = {
   * Tag Api
   * */
   'get /tags' : 'TagsController.index',
+  /*
+  * Favorite Api
+  * */
+  'post /favorites' : 'FavoritesController.create',
+  'delete /favorites/:id': 'FavoritesController.delete',
+  /*
+  **
+  *  API
+   */
 };

@@ -34,6 +34,12 @@ module.exports.policies = {
   'PostsController': {
     'create': ['isAuthorized'],
     'delete': ['isAuthorized'],
+    'update': ['isAuthorized'],
+    'favorites': ['isAuthorized'],
+  },
+  'FavoritesController': {
+    'create': ['isAuthorized'],
+    'delete': ['isAuthorized'],
   }
   /***************************************************************************
   *                                                                          *
