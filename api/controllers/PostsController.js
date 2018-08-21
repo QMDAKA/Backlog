@@ -17,6 +17,7 @@ module.exports = {
         let post = {
           title: req.query.title,
           body: req.query.body,
+          abstract: req.query.abstract,
           image: avatarUrl
         };
         let tags = [...new Set(req.query.tags)];
@@ -122,6 +123,7 @@ module.exports = {
     try {
       let post = await Post.findOne({id: req.param('id')}).populate('tags')
       post.title = req.query.title
+      post.abstract = req.query.abstract
       post.body = req.query.body
       let result = ''
       let newTags = [...new Set(req.query.tags)];
