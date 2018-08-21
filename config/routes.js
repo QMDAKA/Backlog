@@ -32,10 +32,12 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
+  '/*': {
+    controller: 'HomeController',
+    action: 'home',
+    skipAssets: true,
+    skipRegex: /^\/api\/.*$/
   },
-
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
@@ -48,44 +50,44 @@ module.exports.routes = {
   /*
   * Auth Api
   * */
-  'get /auth/login' : 'AuthController.login',
-  'get /auth/logout' : 'AuthController.logout',
-  'get /auth/authenticate' : 'AuthController.authenticate',
-  'get /auth/authcallback' : 'AuthController.authcallback',
-  'get /auth/verify' : 'AuthController.verify',
-  'get /auth/welcome' : 'AuthController.welcome',
+  'get /api/auth/login' : 'AuthController.login',
+  'get /api/auth/logout' : 'AuthController.logout',
+  'get /api/auth/authenticate' : 'AuthController.authenticate',
+  'get /api/auth/authcallback' : 'AuthController.authcallback',
+  'get /api/auth/verify' : 'AuthController.verify',
+  'get /api/auth/welcome' : 'AuthController.welcome',
 
 
   /*
   * User Api
   * */
-  'get /users/me' : 'UserController.me',
-  'get /users': 'UserController.index',
-  'get /users/:id' : 'UserController.show',
+  'get /api/users/me' : 'UserController.me',
+  'get /api/users': 'UserController.index',
+  'get /api/users/:id' : 'UserController.show',
   /*
   * Post Api
   * */
-  'post /posts' : 'PostsController.create',
-  'get /posts' : 'PostsController.index',
-  'get /posts/:id' : 'PostsController.show',
-  'put /posts/:id' : 'PostsController.update',
-  'delete /posts/:id' : 'PostsController.delete',
-  'get /users/:idUser/posts' : 'PostsController.index',
-  'get /users/:idUser/posts/:id' : 'PostsController.show',
-  'get /users/favorites' : 'PostsController.favorites',
+  'post /api/posts' : 'PostsController.create',
+  'get /api/posts' : 'PostsController.index',
+  'get /api/posts/:id' : 'PostsController.show',
+  'put /api/posts/:id' : 'PostsController.update',
+  'delete /api/posts/:id' : 'PostsController.delete',
+  'get /api/users/:idUser/posts' : 'PostsController.index',
+  'get /api/users/:idUser/posts/:id' : 'PostsController.show',
+  'get /api/users/favorites' : 'PostsController.favorites',
   /*
    * Image Api
    * */
-  'post /images' : 'ImagesController.upload',
+  'post /api/images' : 'ImagesController.upload',
   /*
   * Tag Api
   * */
-  'get /tags' : 'TagsController.index',
+  'get /api/tags' : 'TagsController.index',
   /*
   * Favorite Api
   * */
-  'post /favorites' : 'FavoritesController.create',
-  'delete /favorites/:id': 'FavoritesController.delete',
+  'post /api/favorites' : 'FavoritesController.create',
+  'delete /api/favorites/:id': 'FavoritesController.delete',
   /*
   **
   *  API

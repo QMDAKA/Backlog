@@ -16,7 +16,7 @@ passport.use(
     // options for google strategy
     clientID: keys.google.clientID,
     clientSecret: keys.google.clientSecret,
-    callbackURL: '/auth/authcallback'
+    callbackURL: '/api/auth/authcallback'
   }, async (accessToken, refreshToken, profile, done) => {
     // check if user already exists in our own db
     // passport callback function

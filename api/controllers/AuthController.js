@@ -9,7 +9,7 @@ module.exports = {
     passport.authenticate('google',{scope:['https://www.googleapis.com/auth/userinfo.profile']})(req,res);
   },
   authcallback: async (req,res) =>{
-    passport.authenticate('google', { failureRedirect: '/auth/login', scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read'] }, function(err, user) {
+    passport.authenticate('google', { failureRedirect: '/api/auth/login', scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read'] }, function(err, user) {
       req.logIn(user, function(err) {
         if (err) {
           console.log(err);

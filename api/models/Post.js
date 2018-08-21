@@ -11,6 +11,9 @@ module.exports = {
     body: {
       type: 'longtext',
     },
+    abstract: {
+      type: 'longtext',
+    },
     numberOfShare: {
       type: 'integer',
       defaultsTo: 0
