@@ -1,0 +1,34 @@
+.dropdown-item{
+  child-align: auto;
+  padding-left: 20px;
+}
+.dropdown-item i{
+  padding-right: 30px;
+}
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: center;
+  width: 600px;
+  height: 400px;
+  vertical-align: middle;
+}
+.modal-body button{
+  display: block;
+  width: 250px;
+  margin-left: 120px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
