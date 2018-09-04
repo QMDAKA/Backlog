@@ -1,5 +1,4 @@
 const keys = require('../../config/keys')
-const dest = '../../assets/images';
 const allPost = async (page = keys.page, size = keys.size, query = keys.query, sortQuery = keys.sortQuery) => {
   try {
     let posts = await Post.find({
@@ -89,35 +88,48 @@ const findPostByFavorite = async (query = keys.query, page = keys.page, size = k
 
   }
 }
-const uploadStream = async (req, field) => {
-  const uploadPromise = new Promise((resolve, reject) => {
-    req.file('image').upload({
-      maxBytes: 10 * 1024 * 1024,
-      dirname: dest
-    }, (err, result) => {
-      if (err) {
-        return reject(err);
-      }
-      console.log(result)
-      return resolve(result);
-    })
-  })
-}
 const uploadFile = (req) => {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     req.file('image').upload({
       maxBytes: 2000000,
-      dirname: dest
+      dirname: keys.destImage
     }, function (error, files) {
       return error ? reject(error) : resolve(files);
     })
   });
 }
-  module.exports = {
-    uploadStream,
-    uploadFile,
-    allPost,
-    findPostByTag,
-    findPostByUser,
-    findPostByFavorite
+const selectByFav = async (req, res) => {
+  try {
+    let result = await new Promise((resolve, reject) =>{
+      Favorite.native(function (err,collection) {
+        if (err) return reject(err)
+        collection.aggregate( {
+            $group : {_id : "$postId", total : { $sum : 1 }}
+          },
+          {
+            $sort : {total : -1}
+          },
+          {
+            $limit : 4
+          }
+          ).toArray(function (err, results) {
+          if (err) return reject(err)
+          return resolve(results)
+        });
+      })
+    })
+    let postId = _.map(result, '_id')
+    let post = await Post.find({id: postId}).populate('users')
+    return Promise.resolve(post)
+  } catch (e) {
+
   }
+}
+module.exports = {
+  selectByFav,
+  uploadFile,
+  allPost,
+  findPostByTag,
+  findPostByUser,
+  findPostByFavorite
+}

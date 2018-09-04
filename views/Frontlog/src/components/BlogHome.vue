@@ -66,45 +66,18 @@
       <!-- Mini Posts -->
       <section>
         <h3>Most Favorited Post</h3>
-        <div class="mini-posts">
+        <div class="mini-posts" >
 
           <!-- Mini Post -->
-          <article class="mini-post">
+          <article class="mini-post" v-for="(post,index) in miniPayload">
             <header>
-              <h3><a href="#">Vitae sed condimentum</a></h3>
-              <time class="published" datetime="2015-10-20">October 20, 2015</time>
-              <a href="#" class="author"><img src="../images/avatar.jpg" alt=""/></a>
+              <h3>
+                <router-link :to="'/blog/'+post.id">{{post.title}}</router-link>
+              </h3>
+              <time class="published" >{{post.createdAt}}</time>
+              <a :href="'/blog-home?idUser='+post.users[0].id" class="author"><img :src="post.users[0].thumbnail" alt=""/></a>
             </header>
-          </article>
-
-          <!-- Mini Post -->
-          <article class="mini-post">
-            <header>
-              <h3><a href="#">Rutrum neque accumsan</a></h3>
-              <time class="published" datetime="2015-10-19">October 19, 2015</time>
-              <a href="#" class="author"><img src="../images/avatar.jpg" alt=""/></a>
-            </header>
-            <a href="#" class="image"><img src="../images/pic05.jpg" alt=""/></a>
-          </article>
-
-          <!-- Mini Post -->
-          <article class="mini-post">
-            <header>
-              <h3><a href="#">Odio congue mattis</a></h3>
-              <time class="published" datetime="2015-10-18">October 18, 2015</time>
-              <a href="/blog" class="author"><img src="../images/avatar.jpg" alt=""/></a>
-            </header>
-            <a href="#" class="image"><img src="../images/pic06.jpg" alt=""/></a>
-          </article>
-
-          <!-- Mini Post -->
-          <article class="mini-post">
-            <header>
-              <h3><a href="#">Enim nisl veroeros</a></h3>
-              <time class="published" datetime="2015-10-17">October 17, 2015</time>
-              <a href="#" class="author"><img src="../images/avatar.jpg" alt=""/></a>
-            </header>
-            <a href="#" class="image"><img src="../images/pic07.jpg" alt=""/></a>
+            <router-link :to="'/blog/'+post.id" class="image"><img :src="post.image" alt="" /></router-link>
           </article>
 
         </div>
@@ -171,6 +144,7 @@
     data() {
       return {
         payload: '',
+        miniPayload: '',
         page: 1,
         tags: []
       }
@@ -235,15 +209,25 @@
         let result = await axios(
           {
             method: 'GET',
-            url: serverHost + "/tags",
-            headers: {
-              'Authorization': 'Bearer ' + this.$localStorage.get('token'),
-            }
+            url: serverHost + "/tags"
           });
         if (result.data.success) {
           this.tags = result.data.payload
         }
       },
+      async loadMiniPost() {
+        let result = await axios({
+          method: 'GET',
+          url: serverHost + "/favorites/posts?section=1"
+        });
+        if (result.data.success) {
+          this.miniPayload = result.data.payload
+          for (let i = 0; i < this.miniPayload.length; i++) {
+            this.miniPayload[i].createdAt = await this.beautyDate(this.miniPayload[i].createdAt)
+            console.log(this.miniPayload.posts)
+          }
+        }
+      }
     },
     beforeMount() {
       this.$nextTick(() => {
@@ -264,6 +248,7 @@
       try {
         await this.loadposts()
         await this.loadtags()
+        await this.loadMiniPost()
       } catch (e) {
         console.log(e)
       }

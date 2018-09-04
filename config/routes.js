@@ -76,10 +76,12 @@ module.exports.routes = {
   'get /api/users/:idUser/posts' : 'PostsController.index',
   'get /api/users/:idUser/posts/:id' : 'PostsController.show',
   'get /api/users/favorites' : 'PostsController.favorites',
+  'get /api/favorites/posts' : 'PostsController.index',
   /*
    * Image Api
    * */
   'post /api/images' : 'ImagesController.upload',
+  'get /api/images/:thumb' : 'ImagesController.show',
   /*
   * Tag Api
   * */

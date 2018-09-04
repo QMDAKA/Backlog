@@ -1,18 +1,18 @@
-const dest = '../../assets/images';
-const _ = require('lodash')
+const _ = require('lodash');
+const keys = require('../../config/keys');
 module.exports = {
   create: async (req, res) => {
     let randomstring = Math.random().toString(36).slice(-8);
     req.file('image').upload({
       // don't allow the total upload size to exceed ~10MB
       maxBytes: 10 * 1024 * 1024,
-      dirname: dest
+      dirname: keys.destImage
     }, async (err, files) => {
       if (err)
         return res.serverError(err);
       try {
         let baseUrl = req.headers.host;
-        let avatarUrl = 'http://' + baseUrl + '/images/' + files[0].fd.split('/').reverse()[0];
+        let avatarUrl = 'http://' + baseUrl + keys.partUriImage + files[0].fd.split('/').reverse()[0];
         let user = await User.findOne(req.token.userId);
         let post = {
           title: req.query.title,
@@ -56,7 +56,10 @@ module.exports = {
   },
   index: async (req, res) => {
     let payload
-    if (!_.isUndefined(req.param('idUser'))) {
+    if(!_.isUndefined(req.query.section)){
+      payload = await PostsService.selectByFav(req,res)
+    }
+    else if (!_.isUndefined(req.param('idUser'))) {
       payload = await PostsService.findPostByUser(req.param('idUser'), req.query.page, req.query.size)
     }
     else if (_.isUndefined(req.query.idUser) && _.isUndefined(req.query.tag)) {
@@ -144,7 +147,7 @@ module.exports = {
         let result = await PostsService.uploadFile(req)
         console.log(result)
         let baseUrl = req.headers.host;
-        let avatarUrl = 'http://' + baseUrl + '/images/' + result[0].fd.split('/').reverse()[0];
+        let avatarUrl = 'http://' + baseUrl + keys.partUriImage + result[0].fd.split('/').reverse()[0];
         post.image = avatarUrl
       }
       await post.save()
