@@ -28,7 +28,6 @@
     "skel-framework-npm": "^1.0.1",
     "vue": "^2.5.2",
     "vue-froala-wysiwyg": "^2.8.4",
-    "vue-headful": "^2.0.1",
     "vue-localstorage": "^0.6.2",
     "vue-router": "^3.0.1",
     "vuejs-paginate": "^2.0.1"

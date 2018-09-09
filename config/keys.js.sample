@@ -14,4 +14,6 @@ module.exports = {
   query: '',
   sortQuery: 'createdAt DESC',
   sizeOfTags: 10,
+  destImage: '../../assets/images',
+  partUriImage: '/api/images/'
 };

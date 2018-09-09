@@ -12,12 +12,11 @@
           <div class="title">
             <h2><a href="#">{{title}}</a></h2>
             <p class="show-tags" v-for="(tag,index) in tags" style="display: inline">
-              <!--<div style="display: inline"><span>#</span><p>{{tag.name}}</p></div>-->
               #{{tag.name}}
             </p>
           </div>
           <div class="meta">
-            <time class="published" datetime="2015-11-01">November 1, 2015</time>
+            <time class="published" :datetime="createdAt">{{createdAt}}</time>
             <a href="#" class="author"><span class="name">{{user.username}}</span><img :src='user.thumbnail'
                                                                                        alt=""/></a>
           </div>
@@ -40,7 +39,7 @@
       <ul class="icons">
         <li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
         <li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
-        <li><a href="#<span class="label">Instagram</span></a></li>
+        <li><a href="#" class="fa-instagram"><span class="label">Facebook</span></a></li>
         <li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
         <li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
       </ul>
@@ -68,10 +67,16 @@
         body: null,
         tags: [],
         user: null,
-        countFav: null
+        countFav: null,
+        createdAt: null
       }
     },
     methods: {
+      async beautyDate(date) {
+        let ms = Date.parse(date);
+        let now = new Date(ms);
+        return Promise.resolve(now.getDate() + "/" + now.getMonth() + "/" + now.getFullYear())
+      },
       async fav() {
         if (this.$localStorage.get('token') !== null) {
           let result = await axios(
@@ -116,6 +121,8 @@
           this.tags = result.data.payload.tags
           this.countFav = result.data.payload.countFav
           this.user = result.data.payload.users[0]
+          this.createdAt = await this.beautyDate(result.data.payload.createdAt)
+          console.log(this.createdAt)
         }
       } catch (e) {
         this.errors.push(e)

@@ -13,7 +13,7 @@
           <li v-if="checkUser()">
             <router-link to="/user/favorited-post">Favorited Post</router-link>
           </li>
-          <li><a href="#">Dev In Japorn</a></li>
+          <li><a href="#">Dev In Japan</a></li>
           <li><a href="#">Stories</a></li>
           <li><a href="#">About me</a></li>
         </ul>
