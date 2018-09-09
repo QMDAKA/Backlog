@@ -68,7 +68,6 @@ config/local.js
 
 node_modules
 bower_components
-config/keys.js
 
 
 
@@ -82,6 +81,8 @@ config/keys.js
 dump.rdb
 assets/images
 views/Frontlog/config/constant.js
+views/Frontlog/dist
+config/keys.js
 
 
 
