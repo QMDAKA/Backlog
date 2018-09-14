@@ -128,8 +128,7 @@
   import BlogIntro from './BlogIntro'
   import Paginate from 'vuejs-paginate'
 
-  const constant = require('../../config/constant')
-  const serverHost = constant.serverHost
+  const serverHost = process.env.ROOT_API
   const axios = require('axios');
   skel.breakpoints({
     xlarge: '(max-width: 1680px)',
@@ -143,6 +142,7 @@
     name: 'blog-home',
     data() {
       return {
+        env: process.env.ROOT_API,
         payload: '',
         miniPayload: '',
         page: 1,

@@ -47,8 +47,7 @@
   import $ from 'jquery'
   const FormData = require('form-data');
   const axios = require('axios');
-  const constant = require('../../config/constant')
-  let serverHost = constant.serverHost
+  let serverHost = process.env.ROOT_API
   let changeImage = false
   export default {
     components: {Form, BlogNav},

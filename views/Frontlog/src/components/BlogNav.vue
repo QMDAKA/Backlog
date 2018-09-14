@@ -88,8 +88,7 @@
   const _ = require('lodash');
   const $ = require('jquery');
   const axios = require('axios');
-  const constant = require('../../config/constant')
-  let serverHost = constant.serverHost
+  let serverHost = process.env.ROOT_API
   let currentUser;
   export default {
     name: "blog-nav",

@@ -55,8 +55,7 @@
   import BlogNav from './BlogNav'
   import VueFroala from 'vue-froala-wysiwyg';
 
-  const constant = require('../../config/constant')
-  let serverHost = constant.serverHost;
+  let serverHost = process.env.ROOT_API
   export default {
     components: {BlogNav},
     name: 'blog',

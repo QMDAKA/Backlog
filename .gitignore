@@ -80,9 +80,7 @@ bower_components
 .tmp
 dump.rdb
 assets/images
-views/Frontlog/config/constant.js
 views/Frontlog/dist
-config/keys.js
 
 
 

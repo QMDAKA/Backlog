@@ -65,8 +65,7 @@
   import BlogIntro from './BlogIntro'
   import Paginate from 'vuejs-paginate'
 
-  const constant = require('../../config/constant')
-  const serverHost = constant.serverHost
+  let serverHost = process.env.ROOT_API
   const axios = require('axios');
   skel.breakpoints({
     xlarge: '(max-width: 1680px)',

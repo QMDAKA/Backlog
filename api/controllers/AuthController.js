@@ -21,7 +21,7 @@ module.exports = {
             res.sendStatus(500);
           } else {
             console.log(token)
-            res.redirect(keys.frontendHost+'/blog-home?token='+token);
+            res.redirect(sails.config.frontendHost+'/blog-home?token='+token);
           }
         });
         return;
@@ -30,7 +30,7 @@ module.exports = {
   },
   logout: function (req,res) {
     req.logout();
-    res.redirect(keys.frontendHost+'/blog-home');
+    res.redirect(sails.config.frontendHost+'/blog-home');
   },
   verify:  async (req,res) =>{
     return res.json(200, {id: req.token.userId});
