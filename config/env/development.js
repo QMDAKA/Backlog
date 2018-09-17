@@ -17,8 +17,9 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
   frontendHost: 'http://localhost:3002',
-  // models: {
-  //   connection: 'someMongodbServer'
-  // }
+  dbHostname: 'localhost',
+  models: {
+    connection: 'backlogMongoServerDev'
+  }
 
 };

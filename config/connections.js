@@ -58,6 +58,14 @@ module.exports.connections = {
   ***************************************************************************/
   backlogMongoServer: {
     adapter: 'sails-mongo',
+    host: 'mongo',
+    port: 27017,
+    user: '', //optional
+    password: '', //optional
+    database: 'backlog' //optional
+  },
+  backlogMongoServerDev: {
+    adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
     user: '', //optional

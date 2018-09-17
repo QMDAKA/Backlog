@@ -81,6 +81,8 @@ bower_components
 dump.rdb
 assets/images
 views/Frontlog/dist
+mongodb
+ase
 
 
 

@@ -1,0 +1,17 @@
+version: '2'
+services:
+  backlog:
+    restart: always
+    build: .
+    - ./ase/images:/app/assets/images
+    links:
+      - mongo:mongo
+    ports:
+      - 80:80
+  mongo:
+    image: mongo
+    volumes:
+      - ./mongodb/data:/data/db
+    ports:
+      - "27017:27017"
+

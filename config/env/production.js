@@ -17,15 +17,17 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 
-  // models: {
-  //   connection: 'someMysqlServer'
-  // },
+  models: {
+    connection: 'backlogMongoServer'
+  },
 
   /***************************************************************************
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
-  frontendHost: 'http://www.dakth.info',
-   port: 80,
+  // frontendHost: 'http://www.dakth.info',
+  dbHostname: 'mongo',
+  frontendHost: 'http://localhost',
+  port: 80,
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
