@@ -32,8 +32,10 @@
             </div>
             <div class="meta">
               <time class="published" :datetime="beautyDate(post.createdAt)">{{post.createdAt}}</time>
-              <a :href="'/blog-home?idUser='+post.users[0].id" class="author"><span class="name">{{post.users[0].username}}</span><img
-                :src="post.users[0].thumbnail" alt=""/></a>
+              <!--<a :href="'/blog-home?idUser='+post.users[0].id" class="author"><span class="name">{{post.users[0].username}}</span><img-->
+                <!--:src="post.users[0].thumbnail" alt=""/></a>-->
+              <router-link :to="'/blog-home?idUser='+post.users[0].id" class="author"><span class="name">{{post.users[0].username}}</span><img
+                :src="post.users[0].thumbnail" alt=""/></router-link>
             </div>
           </header>
           <a class="image featured">
@@ -83,12 +85,13 @@
         </div>
       </section>
 
-      <!-- Posts List -->
       <section>
         <h3><i class="fa fa-tag" aria-hidden="true"></i>Tags</h3>
         <div class="list-tags" v-for="(tag,index) in tags" style="display: inline">
-          <button type="button" class="btn btn-secondary"><a :href="'/blog-home?tag='+tag.name">{{tag.name}} <span
-            class="badge">{{tag.count}}</span></a></button>
+          <!--<button type="button" class="btn btn-secondary"><a :href="'/blog-home?tag='+tag.name">{{tag.name}} <span-->
+            <!--class="badge">{{tag.count}}</span></a></button>-->
+          <button type="button" class="btn btn-secondary"><router-link :to="'/blog-home?tag='+tag.name">{{tag.name}} <span
+            class="badge">{{tag.count}}</span></router-link></button>
         </div>
       </section>
 
@@ -165,15 +168,11 @@
             {
               method: 'GET',
               url: serverHost + "/posts",
-              headers: {
-                'Authorization': 'Bearer ' + this.$localStorage.get('token'),
-              },
               params: {
                 page: this.page
               }
             });
         } else if (!_.isUndefined(query.idUser)) {
-          console.log('load post with id user')
           result = await axios(
             {
               method: 'GET',
@@ -251,6 +250,11 @@
         await this.loadMiniPost()
       } catch (e) {
         console.log(e)
+      }
+    },
+    watch: {
+      async '$route.query'() {
+        await this.loadposts()
       }
     }
   }

@@ -108,10 +108,41 @@
             if (this.post.image !== null) {
               fd.append('image', this.post.image, this.post.image.name)
               console.log(this.$localStorage.get('token'))
+              try {
+                result = await axios(
+                  {
+                    method: 'POST',
+                    url: this.postBlogUrl,
+                    headers: {
+                      'Authorization': 'Bearer ' + this.$localStorage.get('token'),
+                      'Content-Type': 'multipart/form-data'
+                    },
+                    data: fd,
+                    params: {
+                      title: this.post.title,
+                      abstract: this.post.abstract,
+                      body: this.post.body,
+                      tags: this.post.tags,
+                    }
+                  });
+                  idPost = result.data.payload[0].id
+              }catch (e) {
+               alert(e.response.data.err)
+              }
+            }
+            else
+              alert('Image not found')
+          }
+          else {
+            idPost = this.$route.query.idPost
+            if (changeImage) {
+              fd.append('image', this.post.image, this.post.image.name)
+            }
+            try {
               result = await axios(
                 {
-                  method: 'POST',
-                  url: this.postBlogUrl,
+                  method: 'PUT',
+                  url: this.postBlogUrl + "/" + this.$route.query.idPost,
                   headers: {
                     'Authorization': 'Bearer ' + this.$localStorage.get('token'),
                     'Content-Type': 'multipart/form-data'
@@ -122,35 +153,12 @@
                     abstract: this.post.abstract,
                     body: this.post.body,
                     tags: this.post.tags,
+                    changeImage: changeImage
                   }
                 });
-              idPost = result.data.payload[0].id
+            }catch (e) {
+              alert(e.response.data.err)
             }
-            else
-              alert('Image not found')
-          }
-          else {
-            idPost = this.$route.query.idPost
-            if (changeImage) {
-              fd.append('image', this.post.image, this.post.image.name)
-            }
-            result = await axios(
-              {
-                method: 'PUT',
-                url: this.postBlogUrl + "/" + this.$route.query.idPost,
-                headers: {
-                  'Authorization': 'Bearer ' + this.$localStorage.get('token'),
-                  'Content-Type': 'multipart/form-data'
-                },
-                data: fd,
-                params: {
-                  title: this.post.title,
-                  abstract: this.post.abstract,
-                  body: this.post.body,
-                  tags: this.post.tags,
-                  changeImage : changeImage
-                }
-              });
           }
           console.log(result)
           if (result.data.success) {

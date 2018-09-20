@@ -23,7 +23,8 @@ const findPostByTag = async (query = keys.query, page = keys.page, size = keys.s
       idPosts.push(tag.posts[i].id)
     }
     let posts = await Post.find({
-      id: idPosts
+      id: idPosts,
+      sort: sortQuery
     })
       .populate('tags').populate('users').paginate({page: page, limit: size});
     let count = await Post.count({
@@ -47,7 +48,8 @@ const findPostByUser = async (query = keys.query, page = keys.page, size = keys.
       idPosts.push(user.posts[i].id)
     }
     let posts = await Post.find({
-      id: idPosts
+      id: idPosts,
+      sort: sortQuery
     })
       .populate('tags').populate('users').paginate({page: page, limit: size});
     let count = await Post.count({

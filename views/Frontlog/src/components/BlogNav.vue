@@ -3,7 +3,7 @@
   <div id="nav">
     <header id="header">
       <h1>
-        <a href="/blog-home">Home</a>
+        <router-link to="/blog-home">Home</router-link>
       </h1>
       <nav class="links">
         <ul>

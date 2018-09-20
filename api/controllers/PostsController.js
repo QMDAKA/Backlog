@@ -2,62 +2,58 @@ const _ = require('lodash');
 const keys = require('../../config/keys');
 module.exports = {
   create: async (req, res) => {
-    let randomstring = Math.random().toString(36).slice(-8);
-    req.file('image').upload({
-      // don't allow the total upload size to exceed ~10MB
-      maxBytes: 10 * 1024 * 1024,
-      dirname: keys.destImage
-    }, async (err, files) => {
-      if (err)
-        return res.serverError(err);
-      try {
-        let baseUrl = req.headers.host;
-        let avatarUrl = 'http://' + baseUrl + keys.partUriImage + files[0].fd.split('/').reverse()[0];
-        let user = await User.findOne(req.token.userId);
-        let post = {
-          title: req.query.title,
-          body: req.query.body,
-          abstract: req.query.abstract,
-          image: avatarUrl
-        };
-        let tags = [...new Set(req.query.tags)];
-        post = await Post.create(post);
-        post.users.add(user);
-        for (let i = 0; i < tags.length; i++) {
-          let tmp = await Tag.findOne({'name': tags[i]})
-          if (_.isUndefined(tmp)) {
-            let tag = await Tag.create({
-              name: tags[i]
-            })
-            post.tags.add(tag)
-          } else {
-            post.tags.add(tmp)
-          }
-        }
-        let result = await post.save();
-        result = await Post.findById(post.id).populate('users').populate('tags')
-        console.log(result);
-        return res.status(200).json({
-          success: true,
-          payload: result
-        });
-      } catch (err) {
-        console.log(err)
-        res.status(400).json({
+    try {
+      let imgResult = await PostsService.uploadFile(req)
+      let baseUrl = req.headers.host;
+      let avatarUrl = 'http://' + baseUrl + keys.partUriImage + imgResult[0].fd.split('/').reverse()[0];
+      let user = await User.findOne(req.token.userId);
+      if(_.isUndefined(user)){
+        return res.status(400).json({
           success: false,
-          err: req.__('Bad Request')
+          err: req.__('You need logout then login app again')
         });
       }
-      return res.json({
-        message: files.length + ' file(s) uploaded successfully!',
-        files: files
+      let post = {
+        title: req.query.title,
+        body: req.query.body,
+        abstract: req.query.abstract,
+        image: avatarUrl
+      };
+      let tags = [...new Set(req.query.tags)];
+      post = await Post.create(post);
+      post.users.add(user);
+      for (let i = 0; i < tags.length; i++) {
+        let tmp = await Tag.findOne({'name': tags[i]})
+        if (_.isUndefined(tmp)) {
+          let tag = await Tag.create({
+            name: tags[i]
+          })
+          post.tags.add(tag)
+        } else {
+          post.tags.add(tmp)
+        }
+      }
+      console.log(post)
+      let result = await post.save();
+      result = await Post.findById(post.id).populate('users').populate('tags')
+      console.log(result);
+      return res.status(200).json({
+        success: true,
+        payload: result
       });
-    });
+    } catch (err) {
+      console.log(err)
+      return res.status(400).json({
+        success: false,
+        err: req.__('Bad Request')
+      });
+    }
+
   },
   index: async (req, res) => {
     let payload
-    if(!_.isUndefined(req.query.section)){
-      payload = await PostsService.selectByFav(req,res)
+    if (!_.isUndefined(req.query.section)) {
+      payload = await PostsService.selectByFav(req, res)
     }
     else if (!_.isUndefined(req.param('idUser'))) {
       payload = await PostsService.findPostByUser(req.param('idUser'), req.query.page, req.query.size)

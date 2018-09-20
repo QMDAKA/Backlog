@@ -18,8 +18,20 @@ module.exports = {
    ***************************************************************************/
   frontendHost: 'http://localhost:3002',
   dbHostname: 'localhost',
+  // models: {
+  //   connection: 'backlogMongoServer'
+  // }
+  connections : {
+    mongoDev: {
+      adapter: 'sails-mongo',
+      host: 'localhost',
+      port: 27017,
+      user: '',
+      password: '',
+      database: 'backlog'
+    }
+  },
   models: {
-    connection: 'backlogMongoServerDev'
+    connection: 'mongoDev'
   }
-
 };

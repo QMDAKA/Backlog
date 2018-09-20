@@ -1,8 +1,9 @@
 version: '2'
 services:
   backlog:
+    image: "zzzdakazzz095/backlog"
     restart: always
-    build: .
+    volumes:
     - ./ase/images:/app/assets/images
     links:
       - mongo:mongo

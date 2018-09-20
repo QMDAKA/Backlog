@@ -17,18 +17,27 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 
-  models: {
-    connection: 'backlogMongoServer'
-  },
 
   /***************************************************************************
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
-  // frontendHost: 'http://www.dakth.info',
+  frontendHost: 'http://www.dakth.info',
   dbHostname: 'mongo',
-  frontendHost: 'http://localhost',
+  // frontendHost: 'http://localhost',
   port: 80,
-
+  connections : {
+    mongoLive: {
+      adapter: 'sails-mongo',
+      host: 'localhost',
+      port: 27017,
+      user: '',
+      password: '',
+      database: 'backlog'
+    }
+  },
+  models: {
+    connection: 'mongoLive'
+  }
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
    ***************************************************************************/

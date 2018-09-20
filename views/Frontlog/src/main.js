@@ -7,6 +7,7 @@ require('froala-editor/js/froala_editor.pkgd.min')
 require('froala-editor/css/froala_editor.pkgd.min.css')
 require('font-awesome/css/font-awesome.css')
 require('froala-editor/css/froala_style.min.css')
+var SocialSharing = require('vue-social-sharing');
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -19,6 +20,7 @@ global.jQuery = jQuery
 global.$ = jQuery
 let Bootstrap = require('bootstrap')
 Vue.config.productionTip = false
+Vue.use(SocialSharing);
 Vue.component('paginate', Paginate)
 Vue.use(VueFroala)
 Vue.use(VueLocalStorage)

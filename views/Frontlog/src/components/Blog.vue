@@ -36,15 +36,22 @@
 
     <!-- Footer -->
     <section id="footer">
-      <ul class="icons">
-        <li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="fa-instagram"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
-        <li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
-      </ul>
-      <p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a
-        href="http://unsplash.com">Unsplash</a>.</p>
+      <social-sharing :url='baseUrl' inline-template class="icons">
+        <div>
+          <network network="facebook">
+            <i class="fa fa-fw fa-facebook"></i>
+          </network>
+          <network network="googleplus">
+            <i class="fa fa-fw fa-google-plus"></i>
+          </network>
+          <network network="linkedin">
+            <i class="fa fa-fw fa-linkedin"></i>
+          </network>
+          <network network="reddit">
+            <i class="fa fa-fw fa-reddit"></i>
+          </network>
+        </div>
+      </social-sharing>
     </section>
   </div>
   </body>
@@ -53,11 +60,12 @@
 <script>
   import axios from 'axios'
   import BlogNav from './BlogNav'
+  import SocialSharing from 'vue-social-sharing'
   import VueFroala from 'vue-froala-wysiwyg';
 
   let serverHost = process.env.ROOT_API
   export default {
-    components: {BlogNav},
+    components: {BlogNav,SocialSharing},
     name: 'blog',
     data() {
       return {
@@ -67,7 +75,8 @@
         tags: [],
         user: null,
         countFav: null,
-        createdAt: null
+        createdAt: null,
+        baseUrl:''
       }
     },
     methods: {
@@ -106,6 +115,8 @@
     },
     async mounted() {
       try {
+        this.baseUrl = window.location.href
+        console.log(this.baseUrl)
         console.log(this.$route.params.id);
         let result = await
           axios(
