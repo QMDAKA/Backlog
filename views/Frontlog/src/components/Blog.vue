@@ -36,7 +36,7 @@
 
     <!-- Footer -->
     <section id="footer">
-      <social-sharing :url='baseUrl' inline-template class="icons">
+      <social-sharing :url='baseUrl' :title="title" :description="abstract" :image="image"  inline-template class="icons">
         <div>
           <network network="facebook">
             <i class="fa fa-fw fa-facebook"></i>
@@ -76,6 +76,7 @@
         user: null,
         countFav: null,
         createdAt: null,
+        abstract: null,
         baseUrl:''
       }
     },
@@ -131,6 +132,7 @@
           this.tags = result.data.payload.tags
           this.countFav = result.data.payload.countFav
           this.user = result.data.payload.users[0]
+          this.abstract = result.data.payload.abstract
           this.createdAt = await this.beautyDate(result.data.payload.createdAt)
           console.log(this.createdAt)
         }
