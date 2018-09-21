@@ -28,7 +28,7 @@ module.exports = {
   connections : {
     mongoLive: {
       adapter: 'sails-mongo',
-      host: 'localhost',
+      host: 'mongo',
       port: 27017,
       user: '',
       password: '',
