@@ -32,8 +32,6 @@
             </div>
             <div class="meta">
               <time class="published" :datetime="beautyDate(post.createdAt)">{{post.createdAt}}</time>
-              <!--<a :href="'/blog-home?idUser='+post.users[0].id" class="author"><span class="name">{{post.users[0].username}}</span><img-->
-                <!--:src="post.users[0].thumbnail" alt=""/></a>-->
               <router-link :to="'/blog-home?idUser='+post.users[0].id" class="author"><span class="name">{{post.users[0].username}}</span><img
                 :src="post.users[0].thumbnail" alt=""/></router-link>
             </div>
@@ -68,7 +66,7 @@
       <!-- Mini Posts -->
       <section>
         <h3>Most Favorited Post</h3>
-        <div class="mini-posts" >
+        <div class="mini-posts">
 
           <!-- Mini Post -->
           <article class="mini-post" v-for="(post,index) in miniPayload">
@@ -76,10 +74,11 @@
               <h3>
                 <router-link :to="'/blog/'+post.id">{{post.title}}</router-link>
               </h3>
-              <time class="published" >{{post.createdAt}}</time>
-              <a :href="'/blog-home?idUser='+post.users[0].id" class="author"><img :src="post.users[0].thumbnail" alt=""/></a>
+              <time class="published">{{post.createdAt}}</time>
+              <a :href="'/blog-home?idUser='+post.users[0].id" class="author"><img :src="post.users[0].thumbnail"
+                                                                                   alt=""/></a>
             </header>
-            <router-link :to="'/blog/'+post.id" class="image"><img :src="post.image" alt="" /></router-link>
+            <router-link :to="'/blog/'+post.id" class="image"><img :src="post.image" alt=""/></router-link>
           </article>
 
         </div>
@@ -89,17 +88,18 @@
         <h3><i class="fa fa-tag" aria-hidden="true"></i>Tags</h3>
         <div class="list-tags" v-for="(tag,index) in tags" style="display: inline">
           <!--<button type="button" class="btn btn-secondary"><a :href="'/blog-home?tag='+tag.name">{{tag.name}} <span-->
-            <!--class="badge">{{tag.count}}</span></a></button>-->
-          <button type="button" class="btn btn-secondary"><router-link :to="'/blog-home?tag='+tag.name">{{tag.name}} <span
-            class="badge">{{tag.count}}</span></router-link></button>
+          <!--class="badge">{{tag.count}}</span></a></button>-->
+          <button type="button" class="btn btn-secondary">
+            <router-link :to="'/blog-home?tag='+tag.name">{{tag.name}} <span
+              class="badge">{{tag.count}}</span></router-link>
+          </button>
         </div>
       </section>
 
-      <!-- About -->
+      <!-- Quotes -->
       <section class="blurb">
-        <h2>About</h2>
-        <p> To see the world, things dangerous to come to, to see behind walls, draw closer, to find each other, and to
-          feel. That is the purpose of life.</p>
+        <h2>Quotes</h2>
+          <p>{{quote}} </p>
         <ul class="actions">
           <li><a href="#" class="button">Learn More</a></li>
         </ul>
@@ -130,9 +130,11 @@
   import BlogNav from './BlogNav'
   import BlogIntro from './BlogIntro'
   import Paginate from 'vuejs-paginate'
-
+  import {TweenLite,TimelineMax} from 'gsap/TweenMax'
   const serverHost = process.env.ROOT_API
   const axios = require('axios');
+  const quotes = ['Good, better, best. Never let it rest. Til your good is better and your better is best', 'The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.', 'To see the world, things dangerous to come to, to see behind walls, draw closer, to find each other, and to\n' +
+  '          feel. That is the purpose of life.', 'The best preparation for tomorrow is doing your best today.', 'My life motto is \'Do my best, so that I can\'t blame myself for anything.']
   skel.breakpoints({
     xlarge: '(max-width: 1680px)',
     large: '(max-width: 1280px)',
@@ -149,7 +151,9 @@
         payload: '',
         miniPayload: '',
         page: 1,
-        tags: []
+        tags: [],
+        quote: quotes[0],
+        picker: 0
       }
     },
     methods: {
@@ -157,6 +161,13 @@
         let ms = Date.parse(date);
         let now = new Date(ms);
         return Promise.resolve(now.getDate() + "/" + now.getMonth() + "/" + now.getFullYear())
+      },
+      fetchEventsList: function () {
+        if(this.picker < 5){
+          this.picker ++;
+        }else {
+          this.picker = 0;
+        }
       },
       async loadposts() {
         let query = this.$route.query
@@ -248,6 +259,7 @@
         await this.loadposts()
         await this.loadtags()
         await this.loadMiniPost()
+        setInterval(this.fetchEventsList, 5000)
       } catch (e) {
         console.log(e)
       }
@@ -255,6 +267,10 @@
     watch: {
       async '$route.query'() {
         await this.loadposts()
+      },
+      async 'picker'() {
+        // TimelineMax.to(this.$data, 1, {x: 200, opacity: 1,quote: quotes[picker]}).to(this.$data, 1, {x:400, opacity:0, ease: Power2.easeIn});
+        this.quote= quotes[this.picker]
       }
     }
   }
