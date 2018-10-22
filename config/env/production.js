@@ -30,8 +30,8 @@ module.exports = {
       adapter: 'sails-mongo',
       host: 'mongo',
       port: 27017,
-      user: '',
-      password: '',
+      user: 'daka',
+      password: 'daka',
       database: 'backlog'
     }
   },
