@@ -5,7 +5,9 @@ import BlogHome from '@/components/BlogHome'
 import BlogWrite from '@/components/BlogWrite'
 import BlogFavorited from '@/components/BlogFavorited'
 import BlogWritedByUser from '@/components/BlogWritedByUser'
+import Meta from 'vue-meta'
 Vue.use(Router)
+Vue.use(Meta)
 
 export default new Router({
   routes: [

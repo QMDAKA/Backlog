@@ -16,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import VueFroala from 'vue-froala-wysiwyg'
 import VueLocalStorage from 'vue-localstorage'
 import Paginate from 'vuejs-paginate'
+import Vuex from 'vuex'
 global.jQuery = jQuery
 global.$ = jQuery
 let Bootstrap = require('bootstrap')
@@ -24,6 +25,7 @@ Vue.use(SocialSharing);
 Vue.component('paginate', Paginate)
 Vue.use(VueFroala)
 Vue.use(VueLocalStorage)
+Vue.use(Vuex)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

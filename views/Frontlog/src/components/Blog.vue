@@ -9,6 +9,12 @@
       <!-- Post -->
       <article class="post">
         <header>
+          <meta property="fb:app_id" :content="2068549080101958" />
+          <meta property="og:url" :content="baseUrl" />
+          <meta property="og:type" content="article"/>
+          <meta property="og:title" :content="title"/>
+          <meta property="og:description" :content="abstract"/>
+          <meta property="og:image" :content="image"/>
           <div class="title">
             <h2><a href="#">{{title}}</a></h2>
             <p class="show-tags" v-for="(tag,index) in tags" style="display: inline">
@@ -36,7 +42,8 @@
 
     <!-- Footer -->
     <section id="footer">
-      <social-sharing :url='baseUrl' :title="title" :description="abstract" :image="image"  inline-template class="icons">
+      <social-sharing :url='baseUrl' :title="title" :description="abstract" :image="image" inline-template
+                      class="icons">
         <div>
           <network network="facebook">
             <i class="fa fa-fw fa-facebook"></i>
@@ -65,7 +72,7 @@
 
   let serverHost = process.env.ROOT_API
   export default {
-    components: {BlogNav,SocialSharing},
+    components: {BlogNav, SocialSharing},
     name: 'blog',
     data() {
       return {
@@ -77,7 +84,7 @@
         countFav: null,
         createdAt: null,
         abstract: null,
-        baseUrl:''
+        baseUrl: ''
       }
     },
     methods: {
@@ -114,7 +121,7 @@
         }
       },
     },
-    async mounted() {
+    async beforeMount() {
       try {
         this.baseUrl = window.location.href
         console.log(this.baseUrl)
