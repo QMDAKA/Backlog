@@ -54,4 +54,10 @@ docker run -v /abc:/abc -p 80:80 -it ubuntu /bin/bash
 ** bo commit 1 file 
 git checkout -- <tenfile>
 git rm --cache  api/controllers/ContactController.js
-
+##Migration##
+php artisan migrate 
+php artisan make:migration add_votes_to_users_table --table=users
+##Auth##
+php artisan make:auth
+Eloquent
+Model 
